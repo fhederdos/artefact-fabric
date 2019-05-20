@@ -1,0 +1,47 @@
+namespace org.fhederdos.documentversioning.document
+
+asset Document identified by documentId {
+  o String documentId
+  --> Person owner
+  o Boolean shared optional
+  o Person[] authorized optional
+  o Integer versionCount
+}
+
+participant Person identified by email {
+  o String email
+  o String firstName
+  o String lastName
+  o DateTime dob optional
+  o personalData personalData optional
+}
+
+abstract transaction PersonTransaction {
+  o String personId
+}
+
+transaction AuthorizeAccess extends PersonTransaction {
+}
+
+transaction RevokeAccess extends PersonTransaction {
+}
+
+transaction VersionCreate {
+  o String versionId
+  o String content
+  o DateTime dob optional
+}
+
+event PersonEvent {
+  o PersonTransaction personTransaction
+}
+
+
+concept personalData {
+  o String street
+  o String city
+  o String county
+  o String country
+  o String zip
+  o String webIdAuthorized optional
+}
